@@ -9,8 +9,12 @@ spec:
   type: openapi
   lifecycle: experimental
   owner: user:guest
-  definition:
-    $text: https://raw.githubusercontent.com/Egregiuss/backstage-api-specs/main/products-api/openapi.yaml
+  definition: |
+    openapi: 3.0.3
+    info:
+      title: Products API
+      description: CRUD API for managing products
+      version: 1.0.0
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
@@ -23,5 +27,9 @@ spec:
   type: openapi
   lifecycle: experimental
   owner: user:guest
-  definition:
-    $text: https://raw.githubusercontent.com/Egregiuss/backstage-api-specs/main/football-results-api/openapi.yaml
+  definition: |
+    openapi: 3.0.3
+    info:
+      title: Football Results API
+      description: API for football fixtures, scores, teams and standings
+      version: 1.0.0
