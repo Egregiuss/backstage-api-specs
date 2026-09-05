@@ -1,6 +1,5 @@
 from datetime import datetime
 from enum import Enum
-from typing import Optional
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
