@@ -1,6 +1,5 @@
 import uuid
-from datetime import datetime
-from typing import Optional
+from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -37,8 +36,8 @@ def list_products():
 def create_product(payload: ProductInput):
     product = Product(
         id=str(uuid.uuid4()),
-        createdAt=datetime.utcnow(),
-        updatedAt=datetime.utcnow(),
+        createdAt=datetime.now(tz=timezone.utc),
+        updatedAt=datetime.now(tz=timezone.utc),
         **payload.model_dump(),
     )
     db[product.id] = product
@@ -59,7 +58,7 @@ def update_product(id: str, payload: ProductInput):
     updated = Product(
         id=id,
         createdAt=db[id].createdAt,
-        updatedAt=datetime.utcnow(),
+        updatedAt=datetime.now(tz=timezone.utc),
         **payload.model_dump(),
     )
     db[id] = updated
