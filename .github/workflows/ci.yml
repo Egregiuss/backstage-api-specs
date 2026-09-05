@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  products-api-ci:
+    uses: Egregiuss/central_pipelines/.github/workflows/python-ci.yml@main
+    with:
+      working-directory: products-api
+
+  products-api-security:
+    needs: products-api-ci
+    uses: Egregiuss/central_pipelines/.github/workflows/security-scan.yml@main
+    with:
+      language: python
+      working-directory: products-api
+
+  football-results-api-ci:
+    uses: Egregiuss/central_pipelines/.github/workflows/python-ci.yml@main
+    with:
+      working-directory: football-results-api
+
+  football-results-api-security:
+    needs: football-results-api-ci
+    uses: Egregiuss/central_pipelines/.github/workflows/security-scan.yml@main
+    with:
+      language: python
+      working-directory: football-results-api
