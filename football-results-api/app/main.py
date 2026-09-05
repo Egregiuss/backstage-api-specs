@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import Optional
 from datetime import datetime
 from enum import Enum
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI(
     title="Football Results API",
@@ -22,7 +23,7 @@ class Team(BaseModel):
     id: str
     name: str
     shortName: str
-    logo: Optional[str] = None
+    logo: str | None = None
     league: str
     country: str
 
@@ -31,8 +32,8 @@ class Fixture(BaseModel):
     id: str
     homeTeam: Team
     awayTeam: Team
-    homeScore: Optional[int] = None
-    awayScore: Optional[int] = None
+    homeScore: int | None = None
+    awayScore: int | None = None
     status: FixtureStatus
     kickoff: datetime
     league: str
@@ -58,9 +59,9 @@ standings_db: list = []
 
 @app.get("/fixtures", response_model=list[Fixture])
 def list_fixtures(
-    date: Optional[str] = None,
-    league: Optional[str] = None,
-    season: Optional[int] = None,
+    date: str | None = None,
+    league: str | None = None,
+    season: int | None = None,
 ):
     results = list(fixtures_db.values())
     if league:
@@ -78,7 +79,7 @@ def get_fixture(id: str):
 
 
 @app.get("/teams", response_model=list[Team])
-def list_teams(league: Optional[str] = None):
+def list_teams(league: str | None = None):
     results = list(teams_db.values())
     if league:
         results = [t for t in results if t.league == league]

@@ -1,8 +1,9 @@
+import uuid
+from datetime import datetime
+from typing import Optional
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import Optional
-from datetime import datetime
-import uuid
 
 app = FastAPI(
     title="Products API",
@@ -15,7 +16,7 @@ db: dict = {}
 
 class ProductInput(BaseModel):
     name: str
-    description: Optional[str] = None
+    description: str | None = None
     price: float
     stock: int
     category: str
